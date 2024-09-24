@@ -26,6 +26,9 @@ import {
   Logo,
 } from "@/components/icons";
 
+import { ConnectButton } from "thirdweb/react";
+import { client } from "@/app/client";
+
 export const Navbar = () => {
   const searchInput = (
     <Input
@@ -93,16 +96,9 @@ export const Navbar = () => {
         </NavbarItem>
         <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
         <NavbarItem className="hidden md:flex">
-          <Button
-            isExternal
-            as={Link}
-            className="text-sm font-normal text-default-600 bg-default-100"
-            href={siteConfig.links.sponsor}
-            startContent={<HeartFilledIcon className="text-danger" />}
-            variant="flat"
-          >
-            Sponsor
-          </Button>
+          <ConnectButton
+          client={client}
+          />
         </NavbarItem>
       </NavbarContent>
 

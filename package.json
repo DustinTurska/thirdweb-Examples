@@ -9,6 +9,7 @@
 		"lint": "eslint . --ext .ts,.tsx -c .eslintrc.json --fix"
 	},
 	"dependencies": {
+		"@magic-ext/oauth": "^22.10.0",
 		"@nextui-org/button": "2.0.38",
 		"@nextui-org/code": "2.0.33",
 		"@nextui-org/input": "2.2.5",
@@ -24,17 +25,27 @@
 		"@react-aria/ssr": "3.9.4",
 		"@react-aria/visually-hidden": "3.8.12",
 		"@thirdweb-dev/engine": "^0.0.15",
-		"@thirdweb-dev/react": "^4.9.4",
+		"@types/papaparse": "^5.3.14",
+		"assert": "^2.1.0",
+		"browserify-zlib": "^0.2.0",
 		"clsx": "2.1.1",
+		"crypto-browserify": "^3.12.0",
 		"dotenv": "^16.4.5",
 		"framer-motion": "~11.1.1",
+		"https-browserify": "^1.0.0",
 		"intl-messageformat": "^10.5.0",
+		"magic-sdk": "^28.10.0",
 		"next": "14.2.4",
 		"next-themes": "^0.2.1",
+		"os-browserify": "^0.3.0",
 		"papaparse": "^5.4.1",
+		"path-browserify": "^1.0.1",
 		"react": "18.3.1",
 		"react-dom": "18.3.1",
-		"thirdweb": "^5.58.5"
+		"stream-browserify": "^3.0.0",
+		"stream-http": "^3.2.0",
+		"thirdweb": "^5.58.5",
+		"url": "^0.11.4"
 	},
 	"devDependencies": {
 		"@types/node": "20.5.7",
