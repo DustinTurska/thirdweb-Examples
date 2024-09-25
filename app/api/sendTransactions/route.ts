@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { Engine } from "@thirdweb-dev/engine";
 import dotenv from "dotenv";
+import { NextRequest, NextResponse } from "next/server";
 dotenv.config();
 
 const CHAIN_ID = "17000";
@@ -28,15 +29,8 @@ interface Receiver {
   };
 }
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ message: "Method not allowed" });
-  }
-
-  const { data } = req.body as { data: TransactionData[] };
+export async function POST(req: NextRequest) {
+  const { data } = await req.json() as { data: TransactionData[] };
 
   const receivers: Receiver[] = data.map((entry) => ({
     toAddress: entry.toAddress,
@@ -52,13 +46,13 @@ export default async function handler(
 
   try {
     const result = await sendTransactionBatch(receivers);
-    res.status(200).json(result);
+    return NextResponse.json(result, { status: 200 });
   } catch (error) {
     console.error("Error:", error);
-    res.status(500).json({
+    return NextResponse.json({
       message: "Error processing transactions",
       error: (error as Error).message,
-    });
+    }, { status: 500 });
   }
 }
 
