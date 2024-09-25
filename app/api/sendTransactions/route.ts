@@ -28,6 +28,7 @@ interface Receiver {
     value: string;
   };
 }
+const jobQueue = new Map<string, any>();
 
 export async function POST(req: NextRequest) {
   const { data } = await req.json() as { data: TransactionData[] };

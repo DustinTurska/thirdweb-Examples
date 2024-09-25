@@ -23,9 +23,9 @@ export default function Home() {
         </div>
       </div> */}
 
-      
       <div className="mt-8">
-      <Airdrop /></div>
+        <Airdrop />
+      </div>
     </section>
   );
 }
