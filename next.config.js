@@ -7,6 +7,7 @@ const nextConfig = {
           fs: false,
           net: false,
           tls: false,
+          'pino-pretty': false,
           crypto: require.resolve('crypto-browserify'),
           stream: require.resolve('stream-browserify'),
           url: require.resolve('url/'),
