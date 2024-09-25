@@ -1,0 +1,7 @@
+{
+    "functions": {
+      "api/sendTransactions/route.ts": {
+        "maxDuration": 300
+      }
+    }
+  }
