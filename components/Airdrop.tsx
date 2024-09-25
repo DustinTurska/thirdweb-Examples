@@ -1,7 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { button, buttonGroup, Table, Pagination } from "@nextui-org/react";
+import {
+  button,
+  buttonGroup,
+  Table,
+  Pagination,
+  Button,
+} from "@nextui-org/react";
 import { NextUIProvider } from "@nextui-org/react";
 import { TransactionResults } from "../components/TransactionResults";
 import Papa from "papaparse";
@@ -38,6 +44,15 @@ export default function Airdrop() {
   const [results, setResults] = useState<TransactionResult[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
+
+  const handleDownloadExample = () => {
+    const link = document.createElement("a");
+    link.href = "/example.csv";
+    link.download = "example.csv";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -147,7 +162,7 @@ export default function Airdrop() {
   }
 
   return (
-    <div className="bg-black flex flex-col items-center bg-gray-100 p-4">
+    <div className="bg-black flex flex-col items-center p-4">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-4xl">
         <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
           Airdrop Native
@@ -156,6 +171,13 @@ export default function Airdrop() {
         <div className="flex justify-center mb-6"></div>
 
         <div className="mb-6">
+          <Button
+            color="primary"
+            onClick={handleDownloadExample}
+            className="mb-4"
+          >
+            Download Example CSV
+          </Button>
           <input
             type="file"
             accept=".csv"
@@ -203,7 +225,8 @@ export default function Airdrop() {
 
             {/* Pagination Controls */}
             <div className="flex justify-center items-center mt-4 mb-4">
-              <button
+              <Button
+                color="primary"
                 onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                 disabled={currentPage === 1}
                 className={`px-4 py-2 rounded ${
@@ -213,11 +236,12 @@ export default function Airdrop() {
                 }`}
               >
                 Previous
-              </button>
+              </Button>
               <span className="px-4 py-2 text-sm text-gray-700">
                 Page {currentPage} of {totalPages}
               </span>
-              <button
+              <Button
+                color="primary"
                 onClick={() =>
                   setCurrentPage((prev) => Math.min(prev + 1, totalPages))
                 }
@@ -229,11 +253,12 @@ export default function Airdrop() {
                 }`}
               >
                 Next
-              </button>
+              </Button>
             </div>
 
             <div className="flex justify-center items-center mt-4 mb-4">
-              <button
+              <Button
+                color="primary"
                 onClick={handleUpload}
                 disabled={!file || isUploading}
                 className={`w-full py-3 mt-4 rounded-lg text-lg font-semibold ${
@@ -243,7 +268,7 @@ export default function Airdrop() {
                 }`}
               >
                 {isUploading ? "Uploading..." : "Send Transactions"}
-              </button>
+              </Button>
             </div>
           </div>
         )}
