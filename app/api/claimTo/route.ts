@@ -57,11 +57,11 @@ export async function POST(req: NextRequest) {
       {
         receiver,
         quantity: quantity.toString(),
-        txOverrides: {
-          gas: "530000",
-          maxFeePerGas: "1000000000",
-          maxPriorityFeePerGas: "1000000000",
-        },
+        // txOverrides: {
+        //   gas: "530000",
+        //   maxFeePerGas: "1000000000",
+        //   maxPriorityFeePerGas: "1000000000",
+        // },
       }
     );
 
