@@ -1,120 +1,7 @@
-// "use client";
-
-// import { useState } from "react";
-// import { Button, Input } from "@nextui-org/react";
-
-// interface ClaimResult {
-//   queueId: string;
-//   status: "mined" | "errored" | "pending";
-//   transactionHash?: string | null;
-//   blockExplorerUrl?: string | null;
-//   errorMessage?: string;
-//   toAddress: string;
-//   amount: string;
-// }
-
-// export default function ClaimTo() {
-//   const [toAddress, setToAddress] = useState("");
-//   const [amount, setAmount] = useState("");
-//   const [isSubmitting, setIsSubmitting] = useState(false);
-//   const [result, setResult] = useState<ClaimResult | null>(null);
-
-//   const handleSubmit = async (e: React.FormEvent) => {
-//     e.preventDefault();
-//     if (!toAddress || !amount) {
-//       alert("Please enter both address and amount.");
-//       return;
-//     }
-
-//     setIsSubmitting(true);
-//     setResult(null);
-
-//     try {
-//       const response = await fetch("/api/claimTo", {
-//         method: "POST",
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify({ receiver: toAddress, quantity: amount }),
-//       });
-
-//       if (!response.ok) {
-//         throw new Error("Network response was not ok");
-//       }
-
-//       const results = await response.json();
-//       setResult(results[0]); // Assuming the API returns an array with a single result
-//     } catch (error) {
-//       console.error("Error:", error);
-//       setResult({
-//         queueId: "",
-//         status: "errored",
-//         errorMessage: "Error claiming tokens. Check console for details.",
-//         toAddress,
-//         amount,
-//       });
-//     } finally {
-//       setIsSubmitting(false);
-//     }
-//   };
-
-//   return (
-//     <div className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
-//       <h1 className="text-3xl font-bold">Claim NFT</h1>
-//       <form onSubmit={handleSubmit} className="w-full max-w-md space-y-4">
-//         <Input
-//           label="Receiver Address"
-//           placeholder="0x..."
-//           value={toAddress}
-//           onChange={(e) => setToAddress(e.target.value)}
-//           required
-//         />
-//         <Input
-//           label="Amount"
-//           type="text"
-//           placeholder="0.1"
-//           value={amount}
-//           onChange={(e) => setAmount(e.target.value)}
-//           required
-//         />
-//         <Button
-//           type="submit"
-//           color="primary"
-//           isLoading={isSubmitting}
-//         >
-//           {isSubmitting ? "Submitting..." : "Claim Tokens"}
-//         </Button>
-//       </form>
-
-//       {result && (
-//         <div className="mt-4 p-4 border rounded">
-//           <h2 className="text-xl font-semibold mb-2">Result:</h2>
-//           {result.status === "errored" ? (
-//             <p className="text-red-500">{result.errorMessage}</p>
-//           ) : (
-//             <>
-//               <p>Status: {result.status}</p>
-//               {result.transactionHash && (
-//                 <p>Transaction Hash: {result.transactionHash}</p>
-//               )}
-//               {result.blockExplorerUrl && (
-//                 <p>
-//                   <a href={result.blockExplorerUrl} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
-//                     View on Block Explorer
-//                   </a>
-//                 </p>
-//               )}
-//             </>
-//           )}
-//         </div>
-//       )}
-//     </div>
-//   );
-// }
 "use client";
 
 import { useState } from "react";
-import { Button, Input } from "@nextui-org/react";
+import { Button, Link } from "@nextui-org/react";
 import { NFTTransactionResults } from "./NFTTransactionResults";
 
 interface ClaimResult {
@@ -129,7 +16,7 @@ interface ClaimResult {
 
 export default function ClaimTo() {
   const [toAddress, setToAddress] = useState("");
-  const [amount, setAmount] = useState("");
+  const [amount, setAmount] = useState("1");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [results, setResults] = useState<ClaimResult[]>([]);
 
@@ -137,6 +24,12 @@ export default function ClaimTo() {
     e.preventDefault();
     if (!toAddress || !amount) {
       alert("Please enter both address and amount.");
+      return;
+    }
+
+    const amountNum = parseInt(amount);
+    if (isNaN(amountNum) || amountNum < 1 || amountNum > 5) {
+      alert("Amount must be between 1 and 5.");
       return;
     }
 
@@ -182,50 +75,77 @@ export default function ClaimTo() {
     }
   };
 
-  const clearForm = () => {
-    setToAddress("");
-    setAmount("");
+  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    const numValue = parseInt(value);
+    if (value === "" || (numValue >= 1 && numValue <= 5)) {
+      setAmount(value);
+    }
   };
 
   return (
     <div className="bg-black flex flex-col items-center p-4">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-4xl">
         <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
-          Claim NFT
+          Claim ERC721
         </h1>
-        <form onSubmit={handleSubmit} className="w-full max-w-md space-y-4">
-          <Input
-            label="Receiver Address"
-            placeholder="0x..."
-            value={toAddress}
-            onChange={(e) => setToAddress(e.target.value)}
-            required
-          />
-          <Input
-            label="Amount"
-            type="text"
-            placeholder="1"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            required
-          />
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="space-y-4">
+            <div>
+              <label
+                htmlFor="address"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Address
+              </label>
+              <input
+                id="address"
+                type="text"
+                placeholder="0x0000...0000"
+                className="block w-full text-sm text-gray-700 border border-gray-300 rounded-lg p-2.5 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                value={toAddress}
+                onChange={(e) => setToAddress(e.target.value)}
+                required
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="amount"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Amount
+              </label>
+              <input
+                id="amount"
+                type="number"
+                min="1"
+                max="5"
+                placeholder="1"
+                className="block w-full text-sm text-gray-700 border border-gray-300 rounded-lg p-2.5 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                value={amount}
+                onChange={handleAmountChange}
+                required
+              />
+            </div>
+          </div>
           <Button
             type="submit"
             color="primary"
             isLoading={isSubmitting}
             disabled={isSubmitting}
+            className="w-full"
           >
             {isSubmitting ? "Submitting..." : "Claim NFT"}
           </Button>
         </form>
 
         {results.length > 0 && (
-          <div className="mt-8 w-full max-w-4xl">
+          <div className="mt-8">
             <NFTTransactionResults results={results} />
             <Button
               onClick={() => setResults([])}
               color="secondary"
-              className="mt-4"
+              className="mt-4 w-full"
             >
               Clear Results
             </Button>

@@ -273,7 +273,18 @@ export default function Airdrop() {
           </div>
         )}
 
-        {results.length > 0 && <TransactionResults results={results} />}
+        {results.length > 0 && (
+          <div className="mt-8">
+            <TransactionResults results={results} />
+            <Button
+              onClick={() => setResults([])}
+              color="secondary"
+              className="mt-4 w-full"
+            >
+              Clear Results
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );
