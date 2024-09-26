@@ -11,11 +11,11 @@ export const siteConfig = {
     {
       label: "Airdrop",
       href: "/airdrop", 
-    }
-    // {
-    //   label: "Docs",
-    //   href: "/docs",
-    // },
+    },
+    {
+      label: "NFTs",
+      href: "/nfts",
+    },
     // {
     //   label: "Pricing",
     //   href: "/pricing",
