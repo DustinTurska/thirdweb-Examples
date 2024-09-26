@@ -33,11 +33,15 @@ interface TransactionResult {
   amount: string;
 }
 
+interface ERC721AirdropProps {
+  isDisabled?: boolean;
+}
+
 function formatEthAmount(weiAmount: string): string {
   return ethers.formatEther(weiAmount);
 }
 
-export default function Airdrop() {
+export default function ERC721Airdrop({ isDisabled = false }: ERC721AirdropProps) {
   const [file, setFile] = useState<File | null>(null);
   const [csvData, setCsvData] = useState<CSVRow[]>([]);
   const [isUploading, setIsUploading] = useState(false);
@@ -163,9 +167,10 @@ export default function Airdrop() {
 
   return (
     <div className="bg-black flex flex-col items-center p-4">
+        <div className={isDisabled ? "opacity-50 pointer-events-none" : ""}>
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-4xl">
         <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
-          Airdrop Native Tokens
+          Airdrop ERC721 Tokens
         </h1>
 
         <div className="flex justify-center mb-6"></div>
@@ -274,6 +279,7 @@ export default function Airdrop() {
         )}
 
         {results.length > 0 && <TransactionResults results={results} />}
+      </div>
       </div>
     </div>
   );
