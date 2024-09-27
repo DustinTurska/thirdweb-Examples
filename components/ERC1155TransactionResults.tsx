@@ -47,9 +47,6 @@ export function ERC1155TransactionResults({ results }: ERC1155TransactionResults
               Status
             </th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Name
-            </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Supply
             </th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -73,9 +70,6 @@ export function ERC1155TransactionResults({ results }: ERC1155TransactionResults
                 >
                   {result.status}
                 </span>
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                {result.metadataWithSupply.metadata.name}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                 {result.metadataWithSupply.supply}
