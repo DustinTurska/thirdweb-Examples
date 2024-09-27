@@ -112,7 +112,7 @@ export default function ERC1155MintTo() {
 
   return (
     <div className="bg-black flex flex-col items-center p-4">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-4xl">
+      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-6xl"> {/* Increased max-width */}
         <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
           Mint ERC1155
         </h1>
@@ -131,61 +131,65 @@ export default function ERC1155MintTo() {
                 readOnly
               />
             </div>
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                Name
-              </label>
-              <input
-                id="name"
-                type="text"
-                placeholder="NFT Name"
-                className="block w-full text-sm text-gray-700 border border-gray-300 rounded-lg p-2.5 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-              />
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                  Name
+                </label>
+                <input
+                  id="name"
+                  type="text"
+                  placeholder="NFT Name"
+                  className="block w-full text-sm text-gray-700 border border-gray-300 rounded-lg p-2.5 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                />
+              </div>
+              <div>
+                <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
+                  Description
+                </label>
+                <textarea
+                  id="description"
+                  placeholder="NFT Description"
+                  className="block w-full text-sm text-gray-700 border border-gray-300 rounded-lg p-2.5 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  required
+                />
+              </div>
             </div>
-            <div>
-              <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1">
-                Description
-              </label>
-              <textarea
-                id="description"
-                placeholder="NFT Description"
-                className="block w-full text-sm text-gray-700 border border-gray-300 rounded-lg p-2.5 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                required
-              />
-            </div>
-            <div>
-              <label htmlFor="image" className="block text-sm font-medium text-gray-700 mb-1">
-                Image URL
-              </label>
-              <input
-                id="image"
-                type="url"
-                placeholder="ipfs://QmSvVdTWEzE1JExVYxwJHhaNDzAyzJEJWA1tWbHbnT6E9V/0.avif"
-                className="block w-full text-sm text-gray-700 border border-gray-300 rounded-lg p-2.5 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
-                required
-              />
-            </div>
-            <div>
-              <label htmlFor="supply" className="block text-sm font-medium text-gray-700 mb-1">
-                Supply
-              </label>
-              <input
-                id="supply"
-                type="number"
-                min="1"
-                placeholder="1"
-                className="block w-full text-sm text-gray-700 border border-gray-300 rounded-lg p-2.5 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                value={supply}
-                onChange={(e) => setSupply(e.target.value)}
-                required
-              />
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label htmlFor="image" className="block text-sm font-medium text-gray-700 mb-1">
+                  Image URL
+                </label>
+                <input
+                  id="image"
+                  type="url"
+                  placeholder="ipfs://QmSvVdTWEzE1JExVYxwJHhaNDzAyzJEJWA1tWbHbnT6E9V/0.avif"
+                  className="block w-full text-sm text-gray-700 border border-gray-300 rounded-lg p-2.5 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  value={image}
+                  onChange={(e) => setImage(e.target.value)}
+                  required
+                />
+              </div>
+              <div>
+                <label htmlFor="supply" className="block text-sm font-medium text-gray-700 mb-1">
+                  Supply
+                </label>
+                <input
+                  id="supply"
+                  type="number"
+                  min="1"
+                  placeholder="1"
+                  className="block w-full text-sm text-gray-700 border border-gray-300 rounded-lg p-2.5 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  value={supply}
+                  onChange={(e) => setSupply(e.target.value)}
+                  required
+                />
+              </div>
             </div>
           </div>
           <Button
