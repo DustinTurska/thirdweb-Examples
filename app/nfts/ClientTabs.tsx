@@ -3,6 +3,7 @@
 import { Card, Tabs, Tab, Link } from "@nextui-org/react";
 import ClaimTo from "@/components/ClaimTo";
 import ERC1155ClaimTo from "@/components/ERC1155claimTo";
+import ERC1155MintTo from "@/components/ERC1155MintTo"
 
 export default function ClientTabs() {
   return (
@@ -57,6 +58,31 @@ export default function ClientTabs() {
             </Link>
           </div>
           <ERC1155ClaimTo />
+        </Tab>
+        <Tab key="ERC1155 Mint To" title="ERC1155 Mint To">
+          <div className="flex justify-center w-full mb-4">
+            <Link
+              isExternal
+              className="flex items-center gap-1 text-current"
+              href="https://github.com/DustinTurska/thirdweb-Engine-Scripts/blob/main/erc1155MintTo.ts"
+              title="thirdweb ERC1155.ClaimTo Engine Script"
+            >
+              <span className="text-default-600">See</span>
+              <p className="text-primary">erc1155.mintTo</p>
+            </Link>
+          </div>
+          <div className="flex justify-center w-full mb-4">
+            <Link
+              isExternal
+              className="flex items-center gap-1 text-current"
+              href="https://thirdweb.com/holesky/0x1F77f1fcF71403A41ffBaf8ADb06c8F7Dff18e4b/nfts"
+              title="Engine Demo Edition Drop"
+            >
+              <span className="text-default-600">View Contract on</span>
+              <p className="text-primary">thirdweb</p>
+            </Link>
+          </div>
+          <ERC1155MintTo />
         </Tab>
       </Tabs>
     </Card>
