@@ -18,7 +18,7 @@ export default function Home() {
         <span className={title()}>
         </span>
         <div className={subtitle({ class: "mt-4" })}>
-        The most powerful product in web3
+        Performant & secure scalable backend server to connect to the blockchain
         </div>
       </div>
 
