@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button, Link } from "@nextui-org/react";
 import { NFTTransactionResults } from "./NFTTransactionResults";
+import { useActiveAccount } from "thirdweb/react";
 
 interface ClaimResult {
   queueId: string;
@@ -15,10 +16,18 @@ interface ClaimResult {
 }
 
 export default function ClaimTo() {
-  const [toAddress, setToAddress] = useState("");
   const [amount, setAmount] = useState("1");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [results, setResults] = useState<ClaimResult[]>([]);
+
+  const activeAccount = useActiveAccount();
+  const [toAddress, setToAddress] = useState("");
+
+  useEffect(() => {
+    if (activeAccount?.address) {
+      setToAddress(activeAccount.address);
+    }
+  }, [activeAccount]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -101,11 +110,12 @@ export default function ClaimTo() {
               <input
                 id="address"
                 type="text"
-                placeholder="0x0000...0000"
+                placeholder="Login to Claim"
                 className="block w-full text-sm text-gray-700 border border-gray-300 rounded-lg p-2.5 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 value={toAddress}
                 onChange={(e) => setToAddress(e.target.value)}
                 required
+                readOnly
               />
             </div>
             <div>
@@ -132,7 +142,7 @@ export default function ClaimTo() {
             type="submit"
             color="primary"
             isLoading={isSubmitting}
-            disabled={isSubmitting}
+            disabled={isSubmitting || !activeAccount}
             className="w-full"
           >
             {isSubmitting ? "Submitting..." : "Claim NFT"}

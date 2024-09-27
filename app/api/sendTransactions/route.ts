@@ -7,6 +7,12 @@ dotenv.config();
 const CHAIN_ID = "17000";
 const BACKEND_WALLET_ADDRESS = process.env.BACKEND_WALLET as string;
 
+console.log("Environment Variables:");
+console.log("CHAIN_ID:", CHAIN_ID);
+console.log("BACKEND_WALLET_ADDRESS:", BACKEND_WALLET_ADDRESS);
+console.log("ENGINE_URL:", process.env.ENGINE_URL);
+console.log("ACCESS_TOKEN:", process.env.ACCESS_TOKEN ? "Set" : "Not Set");
+
 const engine = new Engine({
   url: process.env.ENGINE_URL as string,
   accessToken: process.env.ACCESS_TOKEN as string,
