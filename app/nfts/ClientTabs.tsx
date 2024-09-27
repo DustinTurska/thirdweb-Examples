@@ -20,6 +20,17 @@ export default function ClientTabs() {
               <p className="text-primary">erc721.claimTo</p>
             </Link>
           </div>
+          <div className="flex justify-center w-full mb-4">
+            <Link
+              isExternal
+              className="flex items-center gap-1 text-current"
+              href="https://thirdweb.com/holesky/0x48d392f5a1F5Eb3b00A8fbd00073b4882baF364A/nfts"
+              title="Engine Demo NFT Drop"
+            >
+              <span className="text-default-600">View Contract on</span>
+              <p className="text-primary">thirdweb</p>
+            </Link>
+          </div>
           <ClaimTo />
         </Tab>
         <Tab key="ERC1155" title="ERC1155">
@@ -28,10 +39,21 @@ export default function ClientTabs() {
               isExternal
               className="flex items-center gap-1 text-current"
               href="https://github.com/DustinTurska/thirdweb-Engine-Scripts/blob/main/erc1155claimTo.ts"
-              title="thirdweb ERC721.ClaimTo Engine Script"
+              title="thirdweb ERC1155.ClaimTo Engine Script"
             >
               <span className="text-default-600">See</span>
               <p className="text-primary">erc1155.claimTo</p>
+            </Link>
+          </div>
+          <div className="flex justify-center w-full mb-4">
+            <Link
+              isExternal
+              className="flex items-center gap-1 text-current"
+              href="https://thirdweb.com/holesky/0x14b4478BF17Baf901A7F1ADd1E9FaC54C4d1d329/nfts"
+              title="Engine Demo Edition Drop"
+            >
+              <span className="text-default-600">View Contract on</span>
+              <p className="text-primary">thirdweb</p>
             </Link>
           </div>
           <ERC1155ClaimTo />
