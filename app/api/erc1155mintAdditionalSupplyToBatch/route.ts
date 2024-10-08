@@ -41,20 +41,32 @@ export async function POST(req: NextRequest) {
 }
 
 async function processBatches(contractAddress: string, mintData: MintData[]) {
-  const results = [];
-  for (let i = 0; i < mintData.length; i += BATCH_SIZE) {
-    const batch = mintData.slice(i, i + BATCH_SIZE);
-    console.log(`Processing batch ${i / BATCH_SIZE + 1} of ${Math.ceil(mintData.length / BATCH_SIZE)}`);
-    const batchResults = await mintAdditionalSupplyBatch(contractAddress, batch);
-    results.push(...batchResults);
+    const results = [];
+    const batches: MintData[][] = [];
     
-    // Optional: Add a delay between batches to avoid rate limiting
-    if (i + BATCH_SIZE < mintData.length) {
-      await new Promise(resolve => setTimeout(resolve, 5000));
+    // Create batches
+    for (let i = 0; i < mintData.length; i += BATCH_SIZE) {
+      batches.push(mintData.slice(i, i + BATCH_SIZE));
     }
+  
+    for (let i = 0; i < batches.length; i++) {
+      console.log(`Processing batch ${i + 1} of ${batches.length}`);
+      try {
+        const batchResults = await mintAdditionalSupplyBatch(contractAddress, batches[i]);
+        results.push(...batchResults);
+      } catch (error) {
+        console.error(`Error processing batch ${i + 1}:`, error);
+        // Optionally, you could push error information to results here
+      }
+      
+      // Add a delay between batches to avoid rate limiting, except for the last batch
+      if (i < batches.length - 1) {
+        await new Promise(resolve => setTimeout(resolve, 5000));
+      }
+    }
+    
+    return results;
   }
-  return results;
-}
 
 async function mintAdditionalSupplyBatch(contractAddress: string, mintData: MintData[]) {
   try {
