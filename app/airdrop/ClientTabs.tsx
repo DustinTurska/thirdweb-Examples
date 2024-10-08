@@ -42,7 +42,18 @@ export default function ClientTabs() {
           <ERC721Airdrop isDisabled={true} />
         </Tab>
         <Tab key="erc1155" title="ERC1155">
-          <ERC1155Airdrop isDisabled={true} />
+          <div className="flex justify-center w-full mb-4">
+            <Link
+              isExternal
+              className="flex items-center gap-1 text-current"
+              href="https://github.com/DustinTurska/thirdweb-Examples/blob/main/app/api/erc1155mintBatchTo/route.ts"
+              title="thirdweb Airdrop ERC1155 Engine Script"
+            >
+              <span className="text-default-600">See</span>
+              <p className="text-primary">erc1155.mintBatchTo</p>
+            </Link>
+          </div>
+          <ERC1155Airdrop />
         </Tab>
       </Tabs>
     </Card>
