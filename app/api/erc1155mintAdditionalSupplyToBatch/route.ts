@@ -6,6 +6,7 @@ dotenv.config();
 
 const CHAIN_ID = "17000";
 const BACKEND_WALLET_ADDRESS = process.env.BACKEND_WALLET as string;
+const BATCH_SIZE = 250;
 
 console.log("Environment Variables:");
 console.log("CHAIN_ID:", CHAIN_ID);
@@ -28,7 +29,7 @@ export async function POST(req: NextRequest) {
   const { contractAddress, data } = await req.json() as { contractAddress: string, data: MintData[] };
 
   try {
-    const result = await mintAdditionalSupplyBatch(contractAddress, data);
+    const result = await processBatches(contractAddress, data);
     return NextResponse.json(result, { status: 200 });
   } catch (error) {
     console.error("Error:", error);
@@ -37,6 +38,22 @@ export async function POST(req: NextRequest) {
       error: (error as Error).message,
     }, { status: 500 });
   }
+}
+
+async function processBatches(contractAddress: string, mintData: MintData[]) {
+  const results = [];
+  for (let i = 0; i < mintData.length; i += BATCH_SIZE) {
+    const batch = mintData.slice(i, i + BATCH_SIZE);
+    console.log(`Processing batch ${i / BATCH_SIZE + 1} of ${Math.ceil(mintData.length / BATCH_SIZE)}`);
+    const batchResults = await mintAdditionalSupplyBatch(contractAddress, batch);
+    results.push(...batchResults);
+    
+    // Optional: Add a delay between batches to avoid rate limiting
+    if (i + BATCH_SIZE < mintData.length) {
+      await new Promise(resolve => setTimeout(resolve, 5000));
+    }
+  }
+  return results;
 }
 
 async function mintAdditionalSupplyBatch(contractAddress: string, mintData: MintData[]) {

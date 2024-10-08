@@ -26,8 +26,8 @@ export default function ERC1155MintAdditionalSupply() {
 
   const handleDownloadExample = () => {
     const link = document.createElement("a");
-    link.href = "/erc1155Example.csv";
-    link.download = "erc1155Example.csv";
+    link.href = "/addresses.csv";
+    link.download = "addresses.csv";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
